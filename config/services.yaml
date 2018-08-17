@@ -1,0 +1,25 @@
+parameters:
+    locale: 'es'
+
+services:
+    Symfony\Component\Ldap\Ldap:
+        arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+    Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
+        arguments:
+        -   host: 172.20.0.7
+            port: 51980
+            encryption: none
+            options:
+                protocol_version: 3
+                referrals: false
+
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+
